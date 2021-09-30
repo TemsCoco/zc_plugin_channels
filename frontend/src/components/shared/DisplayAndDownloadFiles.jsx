@@ -47,6 +47,9 @@ export default function DisplayAndDeleteFiles() {
 
   const org_id = 1; //Test value for org id
   const channel_id = "613f70bd6173056af01b4aba"; // Hardcoded value to for channel_id
+  
+  const org_id = '614679ee1a5607b13c00bcb7'; //Test value for org id
+  const channel_id = "613f70bd6173056af01b4aba"; // Hardcoded value to for channel_id 
 
   // STEP SIX
   const loadData = async () => {
@@ -108,6 +111,173 @@ export default function DisplayAndDeleteFiles() {
           {isListView ? (
             <Grid>
               {sampleChannelFiles.map((item, index) => (
+              <Box
+                w="99%"
+                bg="white"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "green.300" }}
+              >
+                <Flex align="center">
+                  <Box>
+                    <Image
+                      m={3}
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://bit.ly/dan-abramov"
+                      alt="john doe"
+                    />
+                  </Box>
+                  <Box>
+                    <Text color="#333" fontSize="20px">
+                      image.png
+                    </Text>
+                    <Text color="#717171" fontSize="12px">
+                      Lorem, ipsum.
+                    </Text>
+                  </Box>
+                  <Spacer />
+                  <Box w="60px" m="10px">
+                    <Flex>
+                      <Box>
+                        <IconButton
+                          icon={
+                            <FiDownloadCloud onClick={handleDownload} 
+                            // onClick={loadData}
+                            />
+                          }
+                        />
+                      </Box>
+                      <Spacer />
+                      <Box>
+                        <AiOutlineUpload />
+                      </Box>
+                    </Flex>
+                  </Box>
+                </Flex>
+              </Box>
+
+              <Box
+                bg="white"
+                w="99%"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "green.300" }}
+              >
+                <Flex align="center">
+                  <Box>
+                    <Image
+                      m={3}
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://bit.ly/dan-abramov"
+                      alt="john doe"
+                    />
+                  </Box>
+                  <Box>
+                    <Text color="#333" fontSize="20px">
+                      image.png
+                    </Text>
+                    <Text color="#717171" fontSize="12px">
+                      Lorem, ipsum.
+                    </Text>
+                  </Box>
+                </Flex>
+              </Box>
+
+              <Box
+                bg="white"
+                w="99%"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "green.300" }}
+              >
+                <Flex align="center">
+                  <Box>
+                    <Image
+                      m={3}
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://bit.ly/dan-abramov"
+                      alt="john doe"
+                    />
+                  </Box>
+                  <Box>
+                    <Text color="#333" fontSize="20px">
+                      image.png
+                    </Text>
+                    <Text color="#717171" fontSize="12px">
+                      Lorem, ipsum.
+                    </Text>
+                  </Box>
+                </Flex>
+              </Box>
+
+              <Box
+                bg="white"
+                w="99%"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "green.300" }}
+              >
+                <Flex align="center">
+                  <Box>
+                    <Image
+                      m={3}
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://bit.ly/dan-abramov"
+                      alt="john doe"
+                    />
+                  </Box>
+                  <Box>
+                    <Text color="#333" fontSize="20px">
+                      image.png
+                    </Text>
+                    <Text color="#717171" fontSize="12px">
+                      Lorem, ipsum.
+                    </Text>
+                  </Box>
+                </Flex>
+              </Box>
+
+              <Box
+                bg="white"
+                w="99%"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "green.300" }}
+              >
+                <Flex align="center">
+                  <Box>
+                    <Image
+                      m={3}
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://bit.ly/dan-abramov"
+                      alt="john doe"
+                    />
+                  </Box>
+                  <Box>
+                    <Text color="#333" fontSize="20px">
+                      image.png
+                    </Text>
+                    <Text color="#717171" fontSize="12px">
+                      Lorem, ipsum.
+                    </Text>
+                  </Box>
+                </Flex>
+              </Box>
+            </Grid>
+
+            <SimpleGrid columns={[1, 2, 3, 4]} gap="2px">
+              <Box
+                w="90%"
+                bg="white"
+                borderRadius="3px"
+                m={2}
+                _hover={{ border: "2px", borderColor: "blue.300" }}
+              >
                 <Box
                   key={`${item.fileName} ${index}`}
                   w="99%"

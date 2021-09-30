@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Flex } from "@chakra-ui/layout";
+import React, { useState, useEffect } from "react";
+import { Divider, Flex } from "@chakra-ui/layout";
 import { Box, Button,Modal,ModalContent,ModalOverlay} from "@chakra-ui/react";
 import { IoFlashOutline, IoSendSharp } from "react-icons/io5";
 import { BsTypeBold, BsLink45Deg } from "react-icons/bs";
@@ -20,6 +20,9 @@ import { useParams } from "react-router";
 
 
 const MessageInput = () =>{
+
+  const { users } = useSelector((state) => state.appReducer)
+
     const textRef = useRef(null);
     const [data,setData]=useState('');
     const [emoji,setEmoji]=useState(false);
@@ -28,13 +31,18 @@ const MessageInput = () =>{
     const [toggle,setToggle]=useState(false)
     const [active,setActive]=useState("");
     const [italic,setItalic]=useState("");
-    // const [modal,setModal]=useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const { channelId } = useParams()
 
+    let newChannelId = channelId
+
+    useEffect(() => {
+      newChannelId = channelId
+    }, [channelId])
+
     const datas={
-      user_id:"thanos",
+      user_id: users ? users._id : "614b15fa44a9bd81cedc09d2",
       content:data
     }
 //For Post Request
@@ -42,13 +50,13 @@ const MessageInput = () =>{
     const {_sendMessage} = bindActionCreators(appActions,dispatch);
 
     const {sendMessages} = useSelector((state)=>state.channelsReducer)
-    console.log(sendMessages);
+    // console.log(sendMessages);
 
     const loadData= async ()=>{
-      const org_id = '1';//Test value for org id
-      const channel_id = channelId; // Hardcoded value to for channel_id in org with id 1
-      // await _sendMessage(org_id,channel_id,datas)
-      console.log(data)
+      const org_id = '614679ee1a5607b13c00bcb7';//Test value for org id
+      const channel_id = newChannelId; // Hardcoded value to for channel_id in org with id 1
+      await _sendMessage(org_id,channel_id,datas)
+      console.log(data, channel_id)
       setData('');
     }
 
@@ -148,29 +156,27 @@ const MessageInput = () =>{
             onMouseDown={formatSelection}
             onBlur={()=>setOnInput(false)}
           />
-          <label htmlFor="input">
-            <Box display="flex" justifyContent="space-between" alignItems="center" m={3}>
-              <Box display="flex" _hover={{cursor:'pointer'}} minW="80px" width='7em' justifyContent="space-between">
-                <IoFlashOutline/>
-                <HSeparatorIcon/>
-                <BsTypeBold  className="box" data-command="bold" onClick={changeWeight}/>
-                <FiItalic className="box" data-command="italic" onClick={changeStyle}/>
-                <BsLink45Deg />
-                <AiOutlineBars data-command="insertUnorderedList"/>
-              </Box>
-              <Box display="flex" _hover={{cursor:'pointer'}} alignItems="center" minW="80px"
-              width='10em' justifyContent="space-between">
-                <FiAtSign className="tagged" onClick={addTag}/>
-                <ImAttachment onClick={onOpen}/>
-                <GrEmoji onClick={()=>setEmoji(!emoji)}/>
-                {
-                (input || data!== "") ? <IoSendSharp color="black" onClick={loadData}/>: <Button size="xs" disabled><IoSendSharp /></Button>
-                }
-                <HSeparatorIcon/>
-                <RiArrowDropDownLine size="30px"/>
-              </Box>
+          <Box display="flex" justifyContent="space-between" alignItems="center" m={3}>
+            <Box display="flex" _hover={{cursor:'pointer'}} minW="80px" width='7em' justifyContent="space-between">
+              <IoFlashOutline/>
+              <Divider orientation="vertical" height="20px" color="gray.500"/>
+              <BsTypeBold  className="box" data-command="bold" onClick={changeWeight}/>
+              <FiItalic className="box" data-command="italic" onClick={changeStyle}/>
+              <BsLink45Deg />
+              <AiOutlineBars data-command="insertUnorderedList"/>
             </Box>
-          </label>
+            <Box display="flex" _hover={{cursor:'pointer'}} alignItems="center" minW="80px"
+            width='10em' justifyContent="space-between">
+              <FiAtSign className="tagged" onClick={addTag}/>
+              <ImAttachment onClick={onOpen}/>
+              <GrEmoji onClick={()=>setEmoji(!emoji)}/>
+              {
+              (input || data!== "") ? <IoSendSharp color="black" onClick={loadData}/>: <Button size="xs" disabled><IoSendSharp /></Button>
+              }
+              <Divider orientation="vertical" height="20px" color="gray.500"/>
+              <RiArrowDropDownLine size="30px"/>
+            </Box>
+          </Box>
         </Box>
         <Box display={['flex','none']} overflowX="auto" alignItems="center"
               css={{
@@ -181,7 +187,7 @@ const MessageInput = () =>{
           {
             click ? 
             <Box  display="flex" flexDir="column" width="100%" mx={2}>
-              <Flex width="100%" dir="row" justify="space-between" alignItems="center" minW="10em">
+              <Flex width="100%" dir="row" justify="space-between" alignItems="center" minW="12em">
                 <ResizableInput
                     textareaRef={textRef}
                     border="none"
@@ -208,18 +214,16 @@ const MessageInput = () =>{
                     <Button size="xs" disabled><IoSendSharp /></Button>
                   )}
               </Flex>
-              <label htmlFor="input">
-                <Flex justifyContent="space-between" width="10em" m="10px" _hover={{cursor:'pointer'}}>
-                  <IoFlashOutline/>
-                  <GrEmoji onClick={()=>setEmoji(!emoji)} />
-                  <BsTypeBold data-command="bold"  className="box" onClick={changeWeight}/>
-                  <FiItalic data-command="italic" className="box" onClick={changeStyle}/>
-                  <BsLink45Deg/>
-                  <AiOutlineBars/>
-                  <FiAtSign onClick={addTag}/>
-                  <ImAttachment onClick={onOpen}/>
-                  </Flex>
-              </label>
+              <Flex justifyContent="space-between" width="12em" m="10px" _hover={{cursor:'pointer'}}>
+                <IoFlashOutline/>
+                <GrEmoji onClick={()=>setEmoji(!emoji)} />
+                <BsTypeBold data-command="bold"  className="box" onClick={changeWeight}/>
+                <FiItalic data-command="italic" className="box" onClick={changeStyle}/>
+                <BsLink45Deg/>
+                <AiOutlineBars/>
+                <FiAtSign onClick={addTag}/>
+                <ImAttachment onClick={onOpen}/> 
+              </Flex>
             </Box>
             :
             <Box  display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" width="100%"
@@ -251,18 +255,6 @@ const MessageInput = () =>{
   
   const MAX_HEIGHT = 200;
   const MIN_HEIGHT = 58;
-  
-  const HSeparatorIcon = () => (
-    <svg
-      width="2"
-      height="18"
-      viewBox="0 0 2 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M1 1V17" stroke="#EBEBEB" strokeLinecap="round" />
-    </svg>
-  );
   
   const ResizableInput = ({
     textareaRef,
